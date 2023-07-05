@@ -20,8 +20,8 @@ const app = new cdk.App()
 const context = getCDKContext(app)
 new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
 	env: {
-		account: process.env.CDK_DEFAULT_ACCOUNT || '842537737558',
-		region: context.region || 'us-east-1',
+		account: '842537737558',
+		region: 'us-east-1',
 	},
 })
 
@@ -30,11 +30,15 @@ new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
 console.log('the context', context)
 
 // Deploy the App stack to the same account and region as the CDK stack
-for (const contextEnv of app.node.tryGetContext('environments')) {
-	new AppStack(app, `AppStack-${contextEnv.stage}`, {
+
+new AppStack(
+	app,
+	`AppStack`,
+	{
 		env: {
-			account: process.env.CDK_DEFAULT_ACCOUNT || '842537737558',
-			region: context.region || 'us-east-1',
+			account: context.account,
+			region: context.region,
 		},
-	})
-}
+	},
+	context
+)

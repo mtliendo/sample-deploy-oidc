@@ -1,4 +1,5 @@
 export type CDKContext = {
+	account: string
 	appName: string
 	appDescription: string
 	region: string

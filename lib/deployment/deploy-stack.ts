@@ -17,7 +17,7 @@ export class CdkOidcDeployStack extends cdk.Stack {
 
 		// enable GitHub to securely connect to your AWS account
 		// https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-the-identity-provider-to-aws
-		const provider = new OpenIdConnectProvider(this, 'MyProvider', {
+		const provider = new OpenIdConnectProvider(this, 'GithubProvider', {
 			url: 'https://token.actions.githubusercontent.com',
 			thumbprints: [
 				'6938fd4d98bab03faadb97b34396831e3780aea1',
@@ -53,7 +53,10 @@ export class CdkOidcDeployStack extends cdk.Stack {
 						new PolicyStatement({
 							effect: Effect.ALLOW,
 							actions: ['sts:AssumeRole'],
-							resources: [`arn:aws:iam::${this.account}:role/cdk-*`],
+							resources: [
+								`arn:aws:iam::${this.account}:role/cdk-*`,
+								'cloudformation:DescribeStacks',
+							],
 						}),
 					],
 				}),
