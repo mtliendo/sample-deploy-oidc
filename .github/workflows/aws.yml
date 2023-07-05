@@ -1,4 +1,5 @@
 name: Deploy CDK Project
+
 on:
   push:
     branches:
@@ -17,11 +18,13 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - name: echo vars
-        run: echo ${{ vars }}
-
-      - name: echo env
-        run: echo ${{ env }}
+      - name: Set region environment variable
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" || "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            echo "region=us-east-2" >> $GITHUB_ENV
+          else
+            echo "region=us-east-1" >> $GITHUB_ENV
+          fi
 
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -38,7 +41,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::842537737558:role/trip-logger-github-ci-role
-          aws-region: ${{ env.REGION }}
+          aws-region: $GITHUB_ENV.region
 
       - name: cdk diff
         run: npx aws-cdk diff
