@@ -10,15 +10,18 @@
 	"environments": [
 		{
 			"stage": "prod",
-			"branchName": "main"
+			"branchName": "main",
+			"region": "us-east-2"
 		},
 		{
 			"stage": "staging",
-			"branchName": "staging"
+			"branchName": "staging",
+			"region": "us-east-2"
 		},
 		{
 			"stage": "sandbox",
-			"branchName": "develop"
+			"branchName": "develop",
+			"region": "us-east-1"
 		}
 	]
 }

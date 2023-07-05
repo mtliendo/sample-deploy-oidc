@@ -38,7 +38,7 @@ jobs:
         run: npx aws-cdk diff
 
       - name: cdk deploy App Stack
-        run: npx aws-cdk deploy --exclusively AppStack --region ${{vars.REGION}}
+        run: npx aws-cdk deploy --exclusively AppStack
 
       # - name: Trigger Amplify Build
       #   run: |

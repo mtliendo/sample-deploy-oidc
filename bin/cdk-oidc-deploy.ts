@@ -3,6 +3,7 @@ import 'source-map-support/register'
 import * as cdk from 'aws-cdk-lib'
 import { CdkOidcDeployStack } from '../lib/deployment/deploy-stack'
 import { AppStack } from '../lib/app/app-stack'
+import { getCDKContext } from '../utils'
 
 const app = new cdk.App()
 
@@ -25,9 +26,10 @@ new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
 
 //IF DEPLOYING LOCALLY: npx aws-cdk deploy --exclusively AppStack --region us-east-1 --account YOUR_ACCOUNT
 
+const context = getCDKContext(app)
 new AppStack(app, 'AppStack', {
 	env: {
 		account: process.env.CDK_DEFAULT_ACCOUNT || '842537737558',
-		region: process.env.CDK_DEFAULT_REGION,
+		region: context.region || 'us-east-1',
 	},
 })

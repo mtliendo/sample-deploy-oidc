@@ -1,6 +1,7 @@
 export type CDKContext = {
 	appName: string
 	appDescription: string
+	region: string
 	stage: stageNameContext
 	branchName: branchNameContext
 	github: gitHubContext
