@@ -53,10 +53,12 @@ export class CdkOidcDeployStack extends cdk.Stack {
 						new PolicyStatement({
 							effect: Effect.ALLOW,
 							actions: ['sts:AssumeRole'],
-							resources: [
-								`arn:aws:iam::${this.account}:role/cdk-*`,
-								'cloudformation:DescribeStacks',
-							],
+							resources: [`arn:aws:iam::${this.account}:role/cdk-*`],
+						}),
+						new PolicyStatement({
+							effect: Effect.ALLOW,
+							actions: ['cloudformation:DescribeStacks'],
+							resources: [`arn:aws:cloudformation::${this.account}:stack/*`],
 						}),
 					],
 				}),
