@@ -22,8 +22,8 @@ export class CdkOidcDeployStack extends cdk.Stack {
 			clientIds: ['sts.amazonaws.com'],
 		})
 
-		const ghUsername = context?.github.username
-		const repoName = context?.github.repo
+		const ghUsername = context?.github.username!
+		const repoName = context?.github.repo!
 
 		// Create a principal for the OpenID; which can allow it to assume deployment roles.
 		// This condition is used to control access to specific resources based on the GitHub repository name and username.
