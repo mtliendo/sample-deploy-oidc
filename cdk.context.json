@@ -1,0 +1,20 @@
+{
+	"globals": {
+		"appName": "trip-logger",
+		"appDescription": "A fullstack app for viewing trip info"
+	},
+	"environments": [
+		{
+			"environment": "prod",
+			"branchName": "main"
+		},
+		{
+			"environment": "staging",
+			"branchName": "staging"
+		},
+		{
+			"environment": "sandbox",
+			"branchName": "develop"
+		}
+	]
+}

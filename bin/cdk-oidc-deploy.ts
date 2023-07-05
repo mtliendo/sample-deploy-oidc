@@ -1,21 +1,40 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
-import * as cdk from 'aws-cdk-lib';
-import { CdkOidcDeployStack } from '../lib/cdk-oidc-deploy-stack';
+import 'source-map-support/register'
+import * as cdk from 'aws-cdk-lib'
+import { CdkOidcDeployStack } from '../lib/deployment/deploy-stack'
+import { AppStack } from '../lib/app/app-stack'
+import { getCurrentGitBranch } from '../utils'
+import { CDKContext } from '../cdk.context'
 
-const app = new cdk.App();
+const app = new cdk.App()
+
+// 0. create the repo on github
+// 1. bootstrap and init the cdk project
+// 2. checkout to develop branch
+// 3. create the ci/cd deployment stack
+// 4. manually deploy to AWS so that role is created for github
+// 5. push to github & set REGION env variables for main and develop branches in workflow environments
+// 6. create the app stack
+// 7. create the github actions workflow using ${{vars.REGION}} in th deploy step
+
+// Deploy the CDK stack to a static account and region
 new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
+	env: {
+		account: '842537737558',
+		region: 'us-east-1',
+	},
+	appName: 'trip-logger',
+})
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+//IF DEPLOYING LOCALLY: npx aws-cdk deploy --exclusively AppStack --region us-east-1 --account YOUR_ACCOUNT
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
-
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+new AppStack(app, 'AppStack', {
+	env: {
+		account: process.env.CDK_DEFAULT_ACCOUNT || '842537737558',
+		region: process.env.CDK_DEFAULT_REGION,
+	},
+	stage:
+		(app.node.tryGetContext('environments') as [CDKContext]).find(
+			(env) => env.branchName === getCurrentGitBranch()
+		)?.stage || 'dev',
+})
