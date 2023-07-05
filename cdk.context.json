@@ -9,15 +9,15 @@
 	},
 	"environments": [
 		{
-			"environment": "prod",
+			"stage": "prod",
 			"branchName": "main"
 		},
 		{
-			"environment": "staging",
+			"stage": "staging",
 			"branchName": "staging"
 		},
 		{
-			"environment": "sandbox",
+			"stage": "sandbox",
 			"branchName": "develop"
 		}
 	]
