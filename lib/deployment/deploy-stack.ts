@@ -42,7 +42,7 @@ export class CdkOidcDeployStack extends cdk.Stack {
 			assumedBy: GitHubPrincipal,
 			description:
 				'Role assumed by GitHubPrincipal for deploying from CI using aws cdk',
-			roleName: 'github-ci-role', // this is referenced in the github action
+			roleName: `${props.appName}-github-ci-role`, // this is referenced in the github action
 			maxSessionDuration: cdk.Duration.hours(1),
 			inlinePolicies: {
 				CdkDeploymentPolicy: new PolicyDocument({
