@@ -27,7 +27,7 @@ new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
 //IF DEPLOYING LOCALLY: npx aws-cdk deploy --exclusively AppStack --region us-east-1 --account YOUR_ACCOUNT
 
 const context = getCDKContext(app)
-console.log('context', context)
+console.log('the context', context)
 
 // Deploy the App stack to the same account and region as the CDK stack
 new AppStack(app, 'AppStack', {
