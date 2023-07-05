@@ -9,7 +9,6 @@ on:
       - closed
     branches:
       - main
-      - staging
 
 jobs:
   deploy_aws_cdk:
