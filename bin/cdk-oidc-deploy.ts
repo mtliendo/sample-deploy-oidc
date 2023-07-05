@@ -20,7 +20,7 @@ const app = new cdk.App()
 const context = getCDKContext(app)
 new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
 	env: {
-		account: '842537737558',
+		account: process.env.CDK_DEFAULT_ACCOUNT || '842537737558',
 		region: context.region || 'us-east-1',
 	},
 })
