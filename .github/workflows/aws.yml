@@ -39,7 +39,7 @@ jobs:
         run: npx aws-cdk diff
 
       - name: cdk deploy
-        run: npx aws-cdk deploy
+        run: npx aws-cdk deploy --all
 
       # - name: Trigger Amplify Build
       #   run: |
