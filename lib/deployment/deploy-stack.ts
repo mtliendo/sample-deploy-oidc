@@ -22,6 +22,7 @@ export class CdkOidcDeployStack extends cdk.Stack {
 			clientIds: ['sts.amazonaws.com'],
 		})
 
+		console.log(context)
 		const ghUsername = context?.github.username!
 		const repoName = context?.github.repo!
 

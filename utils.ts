@@ -6,9 +6,11 @@ export const getCurrentGitBranch = () =>
 	execSync('git symbolic-ref --short HEAD').toString().trim()
 
 export const getCDKContext = (scope: App | Stack) => {
-	const environments = scope.node.tryGetContext('environments') as [CDKContext]
+	const environments = scope.node.tryGetContext('environments')
+	const globals = scope.node.tryGetContext('globals')
+
 	const context = environments.find(
-		(env) => env.branchName === getCurrentGitBranch()
+		(env: any) => env.branchName === getCurrentGitBranch()
 	)
-	return context
+	return { ...globals, ...context } as CDKContext
 }
