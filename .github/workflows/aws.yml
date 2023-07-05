@@ -43,7 +43,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::842537737558:role/trip-logger-github-ci-role
-          aws-region: $GITHUB_ENV.region
+          aws-region: ${{ env.region}}
 
       - name: cdk diff
         run: npx aws-cdk diff
