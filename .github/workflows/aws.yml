@@ -26,6 +26,8 @@ jobs:
             echo "region=us-east-1" >> $GITHUB_ENV
           fi
 
+      - name: echo region
+        run: echo $GITHUB_ENV.region
       - name: Checkout repo
         uses: actions/checkout@v3
 
