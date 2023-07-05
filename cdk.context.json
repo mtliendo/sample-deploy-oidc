@@ -1,5 +1,6 @@
 {
 	"globals": {
+		"account": "842537737558",
 		"appName": "trip-logger",
 		"appDescription": "A fullstack app for viewing trip info",
 		"github": {
@@ -9,16 +10,14 @@
 	},
 	"environments": [
 		{
-			"environment": "prod",
-			"branchName": "main"
+			"stage": "prod",
+			"branchName": "main",
+			"region": "us-east-2"
 		},
 		{
-			"environment": "staging",
-			"branchName": "staging"
-		},
-		{
-			"environment": "sandbox",
-			"branchName": "develop"
+			"stage": "sandbox",
+			"branchName": "develop",
+			"region": "us-east-1"
 		}
 	]
 }

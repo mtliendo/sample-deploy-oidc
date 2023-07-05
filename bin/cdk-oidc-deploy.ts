@@ -3,6 +3,7 @@ import 'source-map-support/register'
 import * as cdk from 'aws-cdk-lib'
 import { CdkOidcDeployStack } from '../lib/deployment/deploy-stack'
 import { AppStack } from '../lib/app/app-stack'
+import { getCDKContext } from '../utils'
 
 const app = new cdk.App()
 
@@ -16,6 +17,7 @@ const app = new cdk.App()
 // 7. create the github actions workflow using ${{vars.REGION}} in th deploy step
 
 // Deploy the CDK stack to a static account and region
+const context = getCDKContext(app)
 new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
 	env: {
 		account: '842537737558',
@@ -25,9 +27,18 @@ new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
 
 //IF DEPLOYING LOCALLY: npx aws-cdk deploy --exclusively AppStack --region us-east-1 --account YOUR_ACCOUNT
 
-// new AppStack(app, 'AppStack', {
-// 	env: {
-// 		account: process.env.CDK_DEFAULT_ACCOUNT || '842537737558',
-// 		region: process.env.CDK_DEFAULT_REGION,
-// 	},
-// })
+console.log('the context', context)
+
+// Deploy the App stack to the same account and region as the CDK stack
+
+new AppStack(
+	app,
+	`AppStack`,
+	{
+		env: {
+			account: context.account,
+			region: context.region,
+		},
+	},
+	context
+)
