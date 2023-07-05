@@ -8,14 +8,12 @@ import {
 	Role,
 } from 'aws-cdk-lib/aws-iam'
 import { Construct } from 'constructs'
-
-type CdkOidcDeployStackProps = cdk.StackProps & {
-	appName: string
-}
+import { getCDKContext } from '../../utils'
 
 export class CdkOidcDeployStack extends cdk.Stack {
-	constructor(scope: Construct, id: string, props: CdkOidcDeployStackProps) {
+	constructor(scope: Construct, id: string, props?: cdk.StackProps) {
 		super(scope, id, props)
+		const context = getCDKContext(this)
 
 		// enable GitHub to securely connect to your AWS account
 		// https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-the-identity-provider-to-aws
@@ -24,8 +22,8 @@ export class CdkOidcDeployStack extends cdk.Stack {
 			clientIds: ['sts.amazonaws.com'],
 		})
 
-		const ghUsername = 'mtliendo'
-		const repoName = 'sample-deploy-oidc'
+		const ghUsername = context?.github.username
+		const repoName = context?.github.repo
 
 		// Create a principal for the OpenID; which can allow it to assume deployment roles.
 		// This condition is used to control access to specific resources based on the GitHub repository name and username.
@@ -42,7 +40,7 @@ export class CdkOidcDeployStack extends cdk.Stack {
 			assumedBy: GitHubPrincipal,
 			description:
 				'Role assumed by GitHubPrincipal for deploying from CI using aws cdk',
-			roleName: `${props.appName}-github-ci-role`, // this is referenced in the github action
+			roleName: `${context?.appName}-github-ci-role`, // this is referenced in the github action
 			maxSessionDuration: cdk.Duration.hours(1),
 			inlinePolicies: {
 				CdkDeploymentPolicy: new PolicyDocument({

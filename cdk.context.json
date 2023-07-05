@@ -1,7 +1,11 @@
 {
 	"globals": {
 		"appName": "trip-logger",
-		"appDescription": "A fullstack app for viewing trip info"
+		"appDescription": "A fullstack app for viewing trip info",
+		"github": {
+			"username": "mtliendo",
+			"repo": "sample-deploy-oidc"
+		}
 	},
 	"environments": [
 		{
