@@ -19,6 +19,10 @@ export class CdkOidcDeployStack extends cdk.Stack {
 		// https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-the-identity-provider-to-aws
 		const provider = new OpenIdConnectProvider(this, 'MyProvider', {
 			url: 'https://token.actions.githubusercontent.com',
+			thumbprints: [
+				'6938fd4d98bab03faadb97b34396831e3780aea1',
+				'1c58a3a8518e8759bf075b76b750d4f2df264fcd',
+			],
 			clientIds: ['sts.amazonaws.com'],
 		})
 
