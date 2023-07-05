@@ -3,7 +3,7 @@ import { Construct } from 'constructs'
 import * as sqs from 'aws-cdk-lib/aws-sqs'
 
 type AppStackProps = cdk.StackProps & {
-	stage: string
+	stage?: string
 }
 export class AppStack extends cdk.Stack {
 	constructor(scope: Construct, id: string, props: AppStackProps) {

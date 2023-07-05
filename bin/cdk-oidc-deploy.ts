@@ -3,8 +3,7 @@ import 'source-map-support/register'
 import * as cdk from 'aws-cdk-lib'
 import { CdkOidcDeployStack } from '../lib/deployment/deploy-stack'
 import { AppStack } from '../lib/app/app-stack'
-import { getCurrentGitBranch } from '../utils'
-import { CDKContext } from '../cdk.context'
+import { getCDKContext } from '../utils'
 
 const app = new cdk.App()
 
@@ -17,6 +16,7 @@ const app = new cdk.App()
 // 6. create the app stack
 // 7. create the github actions workflow using ${{vars.REGION}} in th deploy step
 
+const context = getCDKContext(app)
 // Deploy the CDK stack to a static account and region
 new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
 	env: {
@@ -33,8 +33,5 @@ new AppStack(app, 'AppStack', {
 		account: process.env.CDK_DEFAULT_ACCOUNT || '842537737558',
 		region: process.env.CDK_DEFAULT_REGION,
 	},
-	stage:
-		(app.node.tryGetContext('environments') as [CDKContext]).find(
-			(env) => env.branchName === getCurrentGitBranch()
-		)?.stage || 'dev',
+	stage: context?.stage,
 })
