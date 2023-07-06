@@ -7,14 +7,15 @@ import { getCDKContext } from '../utils'
 
 const app = new cdk.App()
 
-// 0. create the repo on github
 // 1. bootstrap and init the cdk project
 // 2. checkout to develop branch
-// 3. create the ci/cd deployment stack
+// 3. create the ci/cd deployment stack and context file
 // 4. manually deploy to AWS so that role is created for github
-// 5. push to github & set REGION env variables for main and develop branches in workflow environments
-// 6. create the app stack
-// 7. create the github actions workflow using ${{vars.REGION}} in th deploy step
+// 5. push to github, add protection rule for main branch
+// 6. create the multi-region app stack using context file
+// 7. create the github actions workflow
+// 8. deploy develop branch, verify action success and stack creation
+// 9. merge to main branch, verify action success and stack creation
 
 // Deploy the CDK stack to a static account and region
 const context = getCDKContext(app)
