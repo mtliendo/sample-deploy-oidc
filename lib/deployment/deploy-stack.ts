@@ -30,7 +30,7 @@ export class CdkOidcDeployStack extends cdk.Stack {
 		const provider = OpenIdConnectProvider.fromOpenIdConnectProviderArn(
 			this,
 			'GithubProvider',
-			'arn:aws:iam:::oidc-provider/token.actions.githubusercontent.com'
+			'arn:aws:iam::842537737558:oidc-provider/token.actions.githubusercontent.com'
 		)
 
 		const ghUsername = context?.github.username!
