@@ -6,8 +6,8 @@ import { AppStack } from '../lib/app/app-stack'
 import { getCDKContext } from '../utils'
 
 const app = new cdk.App()
-
-// 1. bootstrap and init the cdk project
+// 0. clone and deploy github-oidc-provider-cdk repo locally-- copy ARN
+// 1. bootstrap and init this cdk project
 // 2. checkout to develop branch
 // 3. create the ci/cd deployment stack and context file
 // 4. manually deploy to AWS so that role is created for github
@@ -19,16 +19,18 @@ const app = new cdk.App()
 
 // Deploy the CDK stack to a static account and region
 const context = getCDKContext(app)
+
+// Where the role will live. region doesnt matter since roles are global
 new CdkOidcDeployStack(app, 'CdkOidcDeployStack', {
 	env: {
-		account: '842537737558',
+		account: context.account,
 		region: 'us-east-1',
 	},
 })
 
 //IF DEPLOYING LOCALLY: npx aws-cdk deploy --exclusively AppStack --region us-east-1 --account YOUR_ACCOUNT
 
-console.log('the context', context)
+// console.log('the context', context)
 
 // Deploy the App stack to the same account and region as the CDK stack
 

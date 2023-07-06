@@ -30,7 +30,7 @@ export class CdkOidcDeployStack extends cdk.Stack {
 		const provider = OpenIdConnectProvider.fromOpenIdConnectProviderArn(
 			this,
 			'GithubProvider',
-			'arn:aws:iam::842537737558:oidc-provider/token.actions.githubusercontent.com'
+			`arn:aws:iam::${context.account}:oidc-provider/token.actions.githubusercontent.com`
 		)
 
 		const ghUsername = context?.github.username!
@@ -62,7 +62,7 @@ export class CdkOidcDeployStack extends cdk.Stack {
 						new PolicyStatement({
 							effect: Effect.ALLOW,
 							actions: ['sts:AssumeRole'],
-							resources: [`arn:aws:iam::${this.account}:role/cdk-*`],
+							resources: [`arn:aws:iam::${context.account}:role/cdk-*`],
 						}),
 					],
 				}),
